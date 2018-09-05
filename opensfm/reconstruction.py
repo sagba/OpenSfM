@@ -1148,7 +1148,7 @@ def incremental_reconstruction(data, graph):
 
     all_tracks, images = tracks.tracks_and_images(graph)
     chrono.lap('load_tracks_graph')
-    
+
     if not data.reference_lla_exists():
         data.invent_reference_lla(images)
 
@@ -1178,7 +1178,6 @@ def incremental_reconstruction(data, graph):
                 reconstructions.append(reconstruction)
                 reconstructions = sorted(reconstructions,
                                          key=lambda x: -len(x.shots))
-                data.save_reconstruction(reconstructions)
 
     for k, r in enumerate(reconstructions):
         logger.info("Reconstruction {}: {} images, {} points".format(
@@ -1188,7 +1187,7 @@ def incremental_reconstruction(data, graph):
     chrono.lap('compute_reconstructions')
     report['wall_times'] = dict(chrono.lap_times())
     report['not_reconstructed_images'] = list(remaining_images)
-    return report
+    return report, reconstructions
 
 
 class Chronometer:
